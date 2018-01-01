@@ -1,5 +1,6 @@
 字符串的查询默认是区分大小写的
 字符串精确查询
+select * from test where name = 'lisi'
 db.getCollection('test').find({"name":"lisi"})
 模糊查询是用正则实现的
 字符串不区分大小写模糊查询
@@ -13,8 +14,12 @@ db.getCollection('test').find({"name":"zhangsan","age":{$lt:27}})
 or条件
 db.getCollection('test').find({$or:[{"name":"zhangsan"},{"age":{$lt:27}}]})
 and与or条件一起
-db.getCollection('test').find({"name":"zhangsan",$or:[{"name":"zhangsan"},{"age":{$lt:27}}]})
+db.getCollection('test').find({"name":/^zhang/i,$or:[{"name":"zhangsan"},{"age":{$lt:27}}]})
 排序升序
 db.getCollection('test').find({$or:[{"name":"zhangsan"},{"age":{$lt:27}}]}).sort({"age":1})
 排序降序
 db.getCollection('test').find({$or:[{"name":"zhangsan"},{"age":{$lt:27}}]}).sort({"age":-1})
+
+
+select * from test where name like 'zhang%' and (name = 'lisi' or age > 27) order by age asc;
+db.getCollection('test').find({"name":/^zhang/i,$or:[{"name":"zhangsan"},{"age":{$lt:27}}]})
